@@ -1,7 +1,9 @@
 import CalculateEntryAndExitQuery from "@application/CalculateEntryAndExitQuery";
 import NoDataError from "@application/errors/NoDataError";
 import { makeDateRange } from "@application/types";
-import arrayToAsyncIterable from "tests/util/arrayToAsyncIterable";
+import { loadConfig } from "@config/index";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import arrayToAsyncIterable from "../../util/arrayToAsyncIterable";
 
 describe('CalculateEntryAndExitQuery', () => {
   const mockPriceHistoryReadModel = {
@@ -9,7 +11,11 @@ describe('CalculateEntryAndExitQuery', () => {
     getHistory: jest.fn()
   };
 
-  const query = new CalculateEntryAndExitQuery(mockPriceHistoryReadModel);
+  const config = loadConfig();
+  const query = new CalculateEntryAndExitQuery(
+    mockPriceHistoryReadModel,
+    new LoggerFactory(config.log)
+  );
 
   it('should throw NoDataError when getRange returns null', async () => {
     mockPriceHistoryReadModel.getRange.mockResolvedValueOnce(null);

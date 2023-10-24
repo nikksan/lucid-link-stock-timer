@@ -6,6 +6,7 @@ import CalculateEntryAndExitQuery from "@application/CalculateEntryAndExitQuery"
 import HttpController from "@infrastructure/http/HttpController";
 import HttpServer from "@infrastructure/http/HttpServer";
 import HttpRouterFactory from "@infrastructure/http/HttpRouterFactory";
+import cluster from 'node:cluster';
 
 const config = loadConfig();
 
@@ -21,10 +22,10 @@ container.register({
   loggerFactory: asClass(LoggerFactory, {
     injector: () => ({
       config: config.log,
+      globalPrefix: cluster.isPrimary ? 'PRIMARY' : `WORKER:${process.pid}`
     }),
   }).singleton(),
 });
-
 
 if (!isTesting) {
   container.register({

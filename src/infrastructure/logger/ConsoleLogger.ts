@@ -5,6 +5,7 @@ export default class ConsoleLogger implements Logger {
   constructor(
     private logLevel: LogLevel,
     private prefix: string,
+    private globalPrefix: string,
   ) {}
 
   debug(...args: Array<unknown>): void {
@@ -44,7 +45,7 @@ export default class ConsoleLogger implements Logger {
   }
 
   protected getMessageMeta(logLevel: LogLevel): string {
-    return `(${this.getFormattedTime()}) [${this.prefix}] [${logLevel.toUpperCase()}]`;
+    return `(${this.getFormattedTime()}) ${this.globalPrefix ? `[${this.globalPrefix}]` : '' } [${this.prefix}] [${logLevel.toUpperCase()}]`;
   }
 
   protected getFormattedTime(): string {

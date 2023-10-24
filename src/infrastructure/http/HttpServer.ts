@@ -48,6 +48,7 @@ export default class HttpServer {
     //   this.app.use(this.allowCORS);
     // }
 
+
     return new Promise((resolve, reject) => {
       const server: Server = this.app.listen(this.config.port);
       server.on('error', reject);

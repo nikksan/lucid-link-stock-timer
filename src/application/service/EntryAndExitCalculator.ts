@@ -1,6 +1,15 @@
 import { PriceHistory, Solution } from "@application/types";
+import { Logger } from "@infrastructure/logger/Logger";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 
 export default class EntryAndExitCalculator {
+  private logger: Logger;
+  constructor(
+    loggerFactory: LoggerFactory,
+  ) {
+    this.logger = loggerFactory.create(this.constructor.name);
+  }
+
   async calculate(priceHistory: PriceHistory): Promise<Solution | null> {
     let min: number | undefined;
     let minIdx: number | undefined;
@@ -9,6 +18,8 @@ export default class EntryAndExitCalculator {
     let entryDate: string | undefined;
     let exitDate: string | undefined;
     let bestSolutionSoFar: Solution | null = null;
+
+    const startTime = Date.now();
 
     let i = 0
     for await (const point of priceHistory.items) {
@@ -48,9 +59,19 @@ export default class EntryAndExitCalculator {
       }
 
       i++;
+      if (i === 1 || i % 500000 === 0 || i === priceHistory.total) {
+        this.printProgress(i, priceHistory.total);
+      }
     }
 
+    this.logger.debug(`Produced solution for ${priceHistory.total} items in ${Date.now() - startTime} ms`);
+
     return bestSolutionSoFar;
+  }
+
+  private printProgress(currentIdx: number, totalItems: number) {
+    const percentage = Math.round(((currentIdx + 1) / totalItems) * 100);
+    this.logger.debug(`Iteration of ${totalItems} items progress: ${percentage}%`);
   }
 
   private isBetterSolution(
