@@ -8,7 +8,6 @@ import LoggerFactory from '@infrastructure/logger/LoggerFactory';
   if (cluster.isPrimary) {
     const loggerFactory = container.resolve<LoggerFactory>('loggerFactory');
     const logger = loggerFactory.create('index');
-
     const numCPUs = cpus().length;
     for (let i = 0; i < numCPUs; i++) {
       const worker = cluster.fork();
