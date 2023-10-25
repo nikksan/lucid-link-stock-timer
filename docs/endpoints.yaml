@@ -1,0 +1,17 @@
+openapi: "3.0.1"
+servers:
+  - url: /
+info:
+  title: Lucid Link Stock Timer
+  version: '1.0.0'
+  description: |
+    Minimalistic service providing best entry and exit based on a stock price history.
+
+    All 2xx responses will be objects including `data` and `error`, with `error` being null.
+
+    Respectively, it is the other way around for all non-2xx status codes.
+
+    The schemas described in the docs cover only the `data` and `error` props.
+paths:
+  /calculateEntryAndExit:
+    $ref: "./paths/calculateEntryAndExit.yaml"

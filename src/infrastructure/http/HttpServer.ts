@@ -6,6 +6,7 @@ import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 import API from './API';
 import APIErrors from './APIErrors';
 import HttpRouterFactory from './HttpRouterFactory';
+import path from 'path';
 
 export default class HttpServer {
   private logger: Logger;
@@ -14,21 +15,18 @@ export default class HttpServer {
 
   constructor(
     private config: Config['server'],
+    private appRoot: string,
     httpRouterFactory: HttpRouterFactory,
     loggerFactory: LoggerFactory,
   ) {
     this.router = httpRouterFactory.create();
     this.logger = loggerFactory.create(this.constructor.name);
 
-    this.app.use(this.router);
-    this.app.use(this.send404);
-    this.app.use(this.handleError);
+    this.bootstrapRoutes();
   }
 
   start(): Promise<void> {
-    // if (this.config.exposeDocs) {
-    //   this.app.use('/docs', staticRoute(this.rootDir + '/docs'));
-    // }
+
 
     // if (this.config.enableCORS) {
     //   this.app.use(this.allowCORS);
@@ -74,6 +72,15 @@ export default class HttpServer {
 
   //   next();
   // };
+
+  private bootstrapRoutes() {
+    this.app.use('/docs', express.static(path.join(this.appRoot, 'docs')));
+    this.app.use('/docs/swagger-ui', express.static(path.join(this.appRoot, 'node_modules', 'swagger-ui-dist')));
+
+    this.app.use(this.router);
+    this.app.use(this.send404);
+    this.app.use(this.handleError);
+  }
 
   private send404 = (_request: Request, response: Response) => {
     API.sendError(response, APIErrors.NOT_FOUND);

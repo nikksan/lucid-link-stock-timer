@@ -1,0 +1,79 @@
+get:
+  summary: Calculates the most profitable entry and exit based on a time range.
+  operationId: calculateEntryAndExit
+  tags:
+    - Public
+  parameters:
+    - name: from
+      in: query
+      required: true
+      description: UTC date in format - YYYY-MM-DD HH:mm:ss
+      schema:
+        type: string
+        format: date-time
+    - name: to
+      in: query
+      required: true
+      description: UTC date in format - YYYY-MM-DD HH:mm:ss
+      schema:
+        type: string
+        format: date-time
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            description: It CAN be null when profitable solution does not exist.
+            nullable: true
+            type: object
+            required:
+              - entryPrice
+              - entryDate
+              - exitPrice
+              - exitDate
+            properties:
+              entryPrice:
+                type: number
+              entryDate:
+                type: string
+              exitPrice:
+                type: number
+              exitDate:
+                type: string
+    400:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - code
+              - message
+            properties:
+              status:
+                type: number
+                description: Will always be 400
+              code:
+                type: string
+                enum: [range_error, invalid_params]
+              message:
+                type: string
+    500:
+      description: "General error, try again later."
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - code
+              - message
+            properties:
+              status:
+                type: number
+                description: Will always be 500
+              code:
+                type: string
+                description: Will always be general_error
+              message:
+                type: string

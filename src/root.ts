@@ -80,4 +80,8 @@ container.register({
   }),
 });
 
+container.register({
+  appRoot: asValue(__dirname + '/../'),
+});
+
 export default container;
