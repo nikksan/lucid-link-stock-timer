@@ -7,6 +7,7 @@ import API from './API';
 import APIErrors from './APIErrors';
 import HttpRouterFactory from './HttpRouterFactory';
 import path from 'path';
+import cors from 'cors';
 
 export default class HttpServer {
   private logger: Logger;
@@ -26,12 +27,6 @@ export default class HttpServer {
   }
 
   start(): Promise<void> {
-
-
-    // if (this.config.enableCORS) {
-    //   this.app.use(this.allowCORS);
-    // }
-
     return new Promise((resolve, reject) => {
       const server: Server = this.app.listen(this.config.port);
       server.on('error', reject);
@@ -50,30 +45,11 @@ export default class HttpServer {
     return this.app;
   }
 
-  // private allowCORS = (request: Request, response: Response, next: NextFunction) => {
-  //   response.header('Access-Control-Allow-Credentials', 'true');
-  //   response.header('Access-Control-Allow-Origin', request.headers.origin);
-  //   response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, HEAD, DELETE, OPTIONS');
-
-  //   const allowedHeaders = [
-  //     'Accept',
-  //     'Access-Control-Allow-Credentials',
-  //     'Access-Control-Allow-Headers',
-  //     'Access-Control-Allow-Origin',
-  //     'Authorization',
-  //     'Content-Type',
-  //     'Headers',
-  //     'Origin',
-  //     'X-HTTP-Method-Override',
-  //     'X-Requested-With',
-  //   ];
-
-  //   response.header('Access-Control-Allow-Headers', allowedHeaders.join(', '));
-
-  //   next();
-  // };
-
   private bootstrapRoutes() {
+    if (this.config.enableCORS) {
+      this.app.use(cors());
+    }
+
     this.app.use('/docs', express.static(path.join(this.appRoot, 'docs')));
     this.app.use('/docs/swagger-ui', express.static(path.join(this.appRoot, 'node_modules', 'swagger-ui-dist')));
 

@@ -8,6 +8,7 @@ export interface Config {
   };
   server: {
     port: number;
+    enableCORS: boolean,
   };
   db: {
     user: string,

@@ -13,6 +13,7 @@ const config: Config = {
   },
   server: {
     port: parseNumber('SERVER_PORT', 4000),
+    enableCORS: false,
   },
   db: {
     database: parseString('DB_NAME', 'test_db'),

@@ -1,7 +1,7 @@
 import { LogImplementation } from '@infrastructure/logger/LoggerFactory';
 import { Config } from './Config';
 import { LogLevel } from '@infrastructure/logger/Logger';
-import { parseEnum, parseNumber, parseString } from './env-parsers';
+import { parseBoolean, parseEnum, parseNumber, parseString } from './env-parsers';
 import { config as loadDotEnvConfig } from 'dotenv';
 
 loadDotEnvConfig();
@@ -13,6 +13,7 @@ const config: Config = {
   },
   server: {
     port: parseNumber('SERVER_PORT', 3000),
+    enableCORS: parseBoolean('SERVER_ENABLE_CORS', true),
   },
   db: {
     database: parseString('DB_NAME', 'lucid_link_stock_timer'),
