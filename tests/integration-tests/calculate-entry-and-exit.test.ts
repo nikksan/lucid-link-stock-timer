@@ -14,13 +14,13 @@ describe('calculate entry and exit', () => {
 
   afterEach(() => priceHistoryReadModel.clearStubs());
 
-  it('should die with 400[1001] when from and to are missing', async () => {
+  it('should die with 400[invalid_params] when from and to are missing', async () => {
     const response = await apiClient.get(endpoint);
 
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
-      code: 1001,
+      code: 'invalid_params',
       message: 'Expected date to be in format "YYYY-MM-DD HH:mm:ss", received: undefined',
     }));
   });
@@ -28,7 +28,7 @@ describe('calculate entry and exit', () => {
   it.each([
     undefined,
     '2020.01.01',
-  ])('should die with 400[1001] when to is missing or in invalid format', async (value) => {
+  ])('should die with 400[invalid_params] when to is missing or in invalid format', async (value) => {
     const response = await apiClient.get(endpoint, {
       from: value,
     });
@@ -36,7 +36,7 @@ describe('calculate entry and exit', () => {
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
-      code: 1001,
+      code: 'invalid_params',
       message: `Expected date to be in format "YYYY-MM-DD HH:mm:ss", received: ${value}`,
     }));
   });
@@ -44,7 +44,7 @@ describe('calculate entry and exit', () => {
   it.each([
     undefined,
     '2023-10-24T13:06:08.316Z',
-  ])('should die with 400[1001] when from is missing or in invalid format', async (value) => {
+  ])('should die with 400[invalid_params] when from is missing or in invalid format', async (value) => {
     const response = await apiClient.get(endpoint, {
       from: '2020-01-29 01:07:25',
       to: value,
@@ -53,12 +53,12 @@ describe('calculate entry and exit', () => {
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
-      code: 1001,
+      code: 'invalid_params',
       message: `Expected date to be in format "YYYY-MM-DD HH:mm:ss", received: ${value}`,
     }));
   });
 
-  it('should die with 400[1001] when from and to do not form a valid range', async () => {
+  it('should die with 400[invalid_params] when from and to do not form a valid range', async () => {
     const response = await apiClient.get(endpoint, {
       from: '2020-01-29 01:07:25',
       to: '2019-01-29 01:07:25',
@@ -67,12 +67,12 @@ describe('calculate entry and exit', () => {
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
-      code: 1001,
+      code: 'invalid_params',
       message: 'Expected valid date range',
     }));
   });
 
-  it('should die with 400[1003] when from and to do not fall in the covered range', async () => {
+  it('should die with 400[range_error] when from and to do not fall in the covered range', async () => {
     priceHistoryReadModel.stubRange(makeDateRange([
       '2019-01-01 00:00:00',
       '2019-01-01 10:00:00',
@@ -86,7 +86,7 @@ describe('calculate entry and exit', () => {
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
-      code: 1003,
+      code: 'range_error',
       message: expect.stringContaining('is not within possible range'),
     }));
   });
