@@ -35,12 +35,13 @@ For example.
 $ npm run seed "2020-01-01 00:00:00" 1000000
 ```
 
-## Suggested flow
+## Example flow
 ```
+$ npm install
 $ cp .env.sample .env
 $ npm run migrate:up
 $ npm run seed "2023-01-01 00:00:00" 2000000
-$ npm run start
+$ npm start
 ```
 
 ## Configuration
@@ -57,3 +58,7 @@ them in the `.env` file. Following options are supported:
 * `DB_PASSWORD` - self-explanatory
 * `DB_HOST` - self-explanatory, defaults to `5432`
 * `DB_PORT` - self-explanatory, defaults to `localhost`
+
+## API Docs
+
+API documentation is written in OpenAPI 3.0 format and resides within `docs/` directory. It could be accessed via `/docs` endpoint.
