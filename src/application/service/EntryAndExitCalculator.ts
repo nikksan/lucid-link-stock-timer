@@ -23,6 +23,10 @@ export default class EntryAndExitCalculator {
 
     let i = 0;
     for await (const point of priceHistory.items) {
+      if (this.shouldPrintProgress(i, priceHistory.total)) {
+        this.printProgress(i, priceHistory.total);
+      }
+
       const price = point.price;
 
       if (min === undefined || price <= min) {
@@ -60,14 +64,19 @@ export default class EntryAndExitCalculator {
       }
 
       i++;
-      if (i % 500000 === 0 || i === priceHistory.total) {
-        this.printProgress(i, priceHistory.total);
-      }
     }
 
     this.logger.debug(`Produced solution for ${priceHistory.total} items in ${Date.now() - startTime} ms`);
 
     return bestSolutionSoFar;
+  }
+
+  private shouldPrintProgress(currentIdx: number, totalItems: number) {
+    return (totalItems > 1000000 && (
+      currentIdx === 0 ||
+      currentIdx % 500000 === 0 ||
+      currentIdx === (totalItems - 1)
+    ));
   }
 
   private printProgress(currentIdx: number, totalItems: number) {

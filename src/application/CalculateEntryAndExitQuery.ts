@@ -3,6 +3,7 @@ import NoDataError from './errors/NoDataError';
 import EntryAndExitCalculator from './service/EntryAndExitCalculator';
 import PriceHistoryReadModel from './service/PriceHistoryReadModel';
 import { DateRange, Solution, isDateRangeWithinAnotherOne } from './types';
+import { format } from 'util';
 
 export default class CalculateEntryAndExitQuery {
   private entryAndExitCalculator: EntryAndExitCalculator;
@@ -21,7 +22,7 @@ export default class CalculateEntryAndExitQuery {
     }
 
     if (!isDateRangeWithinAnotherOne(dateRange, possibleDateRange)) {
-      throw new RangeError(`Requested range is not within possible range ${possibleDateRange}`);
+      throw new RangeError(`Requested range is not within possible range ${format(possibleDateRange)}`);
     }
 
     const priceHistory = await this.priceHistoryReadModel.getHistory(dateRange);
