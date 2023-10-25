@@ -39,6 +39,7 @@ export default class EntryAndExitCalculator {
       }
 
       if (min === max) {
+        i++;
         continue;
       }
 
@@ -59,7 +60,7 @@ export default class EntryAndExitCalculator {
       }
 
       i++;
-      if (i === 1 || i % 500000 === 0 || i === priceHistory.total) {
+      if (i % 500000 === 0 || i === priceHistory.total) {
         this.printProgress(i, priceHistory.total);
       }
     }
