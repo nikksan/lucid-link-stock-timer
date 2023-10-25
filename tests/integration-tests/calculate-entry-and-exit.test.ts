@@ -21,7 +21,7 @@ describe('calculate entry and exit', () => {
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
       code: 1001,
-      message: "Expected date to be in format \"YYYY-MM-DD HH:mm:ss\", received: undefined"
+      message: 'Expected date to be in format "YYYY-MM-DD HH:mm:ss", received: undefined',
     }));
   });
 
@@ -30,14 +30,14 @@ describe('calculate entry and exit', () => {
     '2020.01.01',
   ])('should die with 400[1001] when to is missing or in invalid format', async (value) => {
     const response = await apiClient.get(endpoint, {
-      from: value
+      from: value,
     });
 
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
       code: 1001,
-      message: `Expected date to be in format \"YYYY-MM-DD HH:mm:ss\", received: ${value}`
+      message: `Expected date to be in format "YYYY-MM-DD HH:mm:ss", received: ${value}`,
     }));
   });
 
@@ -47,14 +47,14 @@ describe('calculate entry and exit', () => {
   ])('should die with 400[1001] when from is missing or in invalid format', async (value) => {
     const response = await apiClient.get(endpoint, {
       from: '2020-01-29 01:07:25',
-      to: value
+      to: value,
     });
 
     expect(response.statusCode).toEqual(400);
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
       code: 1001,
-      message: `Expected date to be in format \"YYYY-MM-DD HH:mm:ss\", received: ${value}`
+      message: `Expected date to be in format "YYYY-MM-DD HH:mm:ss", received: ${value}`,
     }));
   });
 
@@ -68,7 +68,7 @@ describe('calculate entry and exit', () => {
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
       code: 1001,
-      message: `Expected valid date range`
+      message: 'Expected valid date range',
     }));
   });
 
@@ -87,7 +87,7 @@ describe('calculate entry and exit', () => {
     expect(response.body.data).toEqual(null);
     expect(response.body.error).toEqual(expect.objectContaining({
       code: 1003,
-      message: expect.stringContaining('is not within possible range')
+      message: expect.stringContaining('is not within possible range'),
     }));
   });
 

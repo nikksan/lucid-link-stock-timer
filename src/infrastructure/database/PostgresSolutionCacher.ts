@@ -1,7 +1,7 @@
-import { DateRange, Solution } from "@application/types";
-import { Config } from "@config/Config";
-import { Pool } from "pg";
-import SolutionCacher from "./SolutionCacher";
+import { DateRange, Solution } from '@application/types';
+import { Config } from '@config/Config';
+import { Pool } from 'pg';
+import SolutionCacher from './SolutionCacher';
 
 export default class PostgresSolutionCacher implements SolutionCacher {
   private pool: Pool;

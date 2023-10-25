@@ -18,7 +18,7 @@ export default class HttpController {
     this.logger = loggerFactory.create(this.constructor.name);
   }
 
-  calculateEntryAndExit = async (req: Request, res: Response, next: NextFunction) => {
+  calculateEntryAndExit = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const range = makeDateRange([req.query.from, req.query.to]);
       const cachedSolution = await this.solutionCacher.getSolution(range);
@@ -50,7 +50,7 @@ export default class HttpController {
 
       next(err);
     }
-  }
+  };
 
   private sendSolution(res: Response, solution: Solution | null) {
     API.sendData(res, solution ? {

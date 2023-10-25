@@ -1,6 +1,6 @@
-import { PriceHistory, Solution } from "@application/types";
-import { Logger } from "@infrastructure/logger/Logger";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { PriceHistory, Solution } from '@application/types';
+import { Logger } from '@infrastructure/logger/Logger';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 
 export default class EntryAndExitCalculator {
   private logger: Logger;
@@ -21,7 +21,7 @@ export default class EntryAndExitCalculator {
 
     const startTime = Date.now();
 
-    let i = 0
+    let i = 0;
     for await (const point of priceHistory.items) {
       const price = point.price;
 
@@ -76,7 +76,7 @@ export default class EntryAndExitCalculator {
 
   private isBetterSolution(
     bestSolutionSoFar: Solution,
-    newSolution: Solution
+    newSolution: Solution,
   ) {
     if (newSolution.profit !== bestSolutionSoFar.profit) {
       return newSolution.profit > bestSolutionSoFar.profit;

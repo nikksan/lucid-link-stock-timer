@@ -10,7 +10,7 @@ export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 export type DateRange = Nominal<[string, string], 'DateRange'>;
 export function makeDateRange(input: unknown): DateRange {
   if (!Array.isArray(input) || input.length !== 2) {
-    throw new TypeError(`Expected array of size = 2`);
+    throw new TypeError('Expected array of size = 2');
   }
 
   for (const item of input) {
@@ -26,7 +26,7 @@ export function makeDateRange(input: unknown): DateRange {
   return input as DateRange;
 }
 
-export function isDateRangeWithinAnotherOne(dateRange: DateRange, anotherDateRange: DateRange) {
+export function isDateRangeWithinAnotherOne(dateRange: DateRange, anotherDateRange: DateRange): boolean {
   return (
     moment(dateRange[0]).unix() >= moment(anotherDateRange[0]).unix() &&
     moment(dateRange[0]).unix() <= moment(anotherDateRange[1]).unix() &&

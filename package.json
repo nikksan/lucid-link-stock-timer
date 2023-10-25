@@ -9,7 +9,22 @@
     "watch": "jest --watch --bail --coverage=false",
     "migrate:up": "npm run migrate up",
     "migrate": "./node-pg-migrate -m src/infrastructure/database/migrations -f src/config/node-pg-migrate.ts",
-    "seed": "ts-node -r tsconfig-paths/register src/scripts/seed.ts"
+    "seed": "ts-node -r tsconfig-paths/register src/scripts/seed.ts",
+    "lint": "eslint './src/**/*.ts' './tests/**/*.ts'"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --cache --fix",
+      "git add"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -38,7 +53,14 @@
     "@types/pg-format": "^1.0.4",
     "@types/pg-query-stream": "^3.4.0",
     "@types/supertest": "^2.0.15",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
+    "eslint-plugin-no-only-tests": "^3.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^4.0.10",
     "jest": "^29.7.0",
+    "lint-staged": "^9.5.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1"
   }

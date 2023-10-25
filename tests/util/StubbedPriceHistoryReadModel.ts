@@ -1,13 +1,14 @@
-import PriceHistoryReadModel from "@application/service/PriceHistoryReadModel";
-import { DateRange, PriceHistory } from "@application/types";
+import PriceHistoryReadModel from '@application/service/PriceHistoryReadModel';
+import { DateRange, PriceHistory } from '@application/types';
 
 export default class StubbedPriceHistoryReadModel implements PriceHistoryReadModel {
   private priceHistory: PriceHistory | undefined;
   private range: DateRange | null | undefined;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getHistory(_range: DateRange): Promise<PriceHistory> {
     if (!this.priceHistory) {
-      throw new Error(`No priceHistory, call stubPriceHistory() first!`);
+      throw new Error('No priceHistory, call stubPriceHistory() first!');
     }
 
     return this.priceHistory;
@@ -15,21 +16,21 @@ export default class StubbedPriceHistoryReadModel implements PriceHistoryReadMod
 
   async getRange(): Promise<DateRange | null> {
     if (this.range === undefined) {
-      throw new Error(`No range, call stubRange() first!`);
+      throw new Error('No range, call stubRange() first!');
     }
 
     return this.range;
   }
 
-  stubPriceHistory(priceHistory: PriceHistory) {
+  stubPriceHistory(priceHistory: PriceHistory): void {
     this.priceHistory = priceHistory;
   }
 
-  stubRange(range: DateRange | null) {
+  stubRange(range: DateRange | null): void {
     this.range = range;
   }
 
-  clearStubs() {
+  clearStubs(): void {
     this.priceHistory = undefined;
     this.range = undefined;
   }

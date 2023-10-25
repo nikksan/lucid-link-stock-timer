@@ -1,20 +1,20 @@
-import CalculateEntryAndExitQuery from "@application/CalculateEntryAndExitQuery";
-import NoDataError from "@application/errors/NoDataError";
-import { makeDateRange } from "@application/types";
-import { loadConfig } from "@config/index";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import arrayToAsyncIterable from "../../util/arrayToAsyncIterable";
+import CalculateEntryAndExitQuery from '@application/CalculateEntryAndExitQuery';
+import NoDataError from '@application/errors/NoDataError';
+import { makeDateRange } from '@application/types';
+import { loadConfig } from '@config/index';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import arrayToAsyncIterable from '../../util/arrayToAsyncIterable';
 
 describe('CalculateEntryAndExitQuery', () => {
   const mockPriceHistoryReadModel = {
     getRange: jest.fn(),
-    getHistory: jest.fn()
+    getHistory: jest.fn(),
   };
 
   const config = loadConfig();
   const query = new CalculateEntryAndExitQuery(
     mockPriceHistoryReadModel,
-    new LoggerFactory(config.log)
+    new LoggerFactory(config.log),
   );
 
   it('should throw NoDataError when getRange returns null', async () => {
@@ -52,7 +52,7 @@ describe('CalculateEntryAndExitQuery', () => {
         { price: 1, date: '2019-01-01 00:00:00' },
         { price: 2, date: '2019-01-01 00:00:01' },
         { price: 3, date: '2019-01-01 00:00:02' },
-      ])
+      ]),
     });
 
     const bestSolution = await query.run(dateRange);
@@ -76,7 +76,7 @@ describe('CalculateEntryAndExitQuery', () => {
         { price: 3, date: '2019-01-01 00:00:00' },
         { price: 2, date: '2019-01-01 00:00:01' },
         { price: 1, date: '2019-01-01 00:00:02' },
-      ])
+      ]),
     });
 
     const bestSolution = await query.run(dateRange);
@@ -97,7 +97,7 @@ describe('CalculateEntryAndExitQuery', () => {
         { price: 3, date: '2019-01-01 00:00:00' },
         { price: 3, date: '2019-01-01 00:00:01' },
         { price: 3, date: '2019-01-01 00:00:02' },
-      ])
+      ]),
     });
 
     const bestSolution = await query.run(dateRange);
@@ -121,7 +121,7 @@ describe('CalculateEntryAndExitQuery', () => {
         { price: 1, date: '2019-01-01 00:00:03' },
         { price: 2, date: '2019-01-01 00:00:04' },
         { price: 3, date: '2019-01-01 00:00:05' },
-      ])
+      ]),
     });
 
     const bestSolution = await query.run(dateRange);
@@ -149,7 +149,7 @@ describe('CalculateEntryAndExitQuery', () => {
         { price: 3, date: '2019-01-01 00:00:02' },
         { price: 1, date: '2019-01-01 00:00:03' },
         { price: 3, date: '2019-01-01 00:00:04' },
-      ])
+      ]),
     });
 
     const bestSolution = await query.run(dateRange);
@@ -162,5 +162,4 @@ describe('CalculateEntryAndExitQuery', () => {
     }));
   });
 });
-
 

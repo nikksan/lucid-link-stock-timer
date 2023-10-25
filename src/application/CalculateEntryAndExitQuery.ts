@@ -1,8 +1,8 @@
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import NoDataError from "./errors/NoDataError";
-import EntryAndExitCalculator from "./service/EntryAndExitCalculator";
-import PriceHistoryReadModel from "./service/PriceHistoryReadModel";
-import { DateRange, Solution, isDateRangeWithinAnotherOne } from "./types";
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import NoDataError from './errors/NoDataError';
+import EntryAndExitCalculator from './service/EntryAndExitCalculator';
+import PriceHistoryReadModel from './service/PriceHistoryReadModel';
+import { DateRange, Solution, isDateRangeWithinAnotherOne } from './types';
 
 export default class CalculateEntryAndExitQuery {
   private entryAndExitCalculator: EntryAndExitCalculator;

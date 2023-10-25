@@ -1,5 +1,5 @@
-import { Router as ExpressRouter, Router as createExpressRouter } from "express";
-import HttpController from "./HttpController";
+import { Router as ExpressRouter, Router as createExpressRouter } from 'express';
+import HttpController from './HttpController';
 
 export default class HttpRouterFactory {
   constructor(

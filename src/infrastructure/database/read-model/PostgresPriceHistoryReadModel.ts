@@ -1,9 +1,9 @@
-import PriceHistoryReadModel from "@application/service/PriceHistoryReadModel";
-import { Config } from "@config/Config";
-import { Pool, types } from 'pg'
+import PriceHistoryReadModel from '@application/service/PriceHistoryReadModel';
+import { Config } from '@config/Config';
+import { Pool, types } from 'pg';
 import QueryStream from 'pg-query-stream';
-import { Transform, TransformCallback, pipeline } from "stream";
-import { DateRange, PriceHistory, PricePoint } from "@application/types";
+import { Transform, TransformCallback, pipeline } from 'stream';
+import { DateRange, PriceHistory, PricePoint } from '@application/types';
 
 // disable parsing of timestamp
 types.setTypeParser(types.builtins.TIMESTAMP, (timeStr) => timeStr);
@@ -26,7 +26,7 @@ export default class PostgresPriceHistoryReadModel implements PriceHistoryReadMo
 
   async getHistory(range: DateRange): Promise<PriceHistory> {
     const { rows: [row] } =  await this.pool.query('SELECT COUNT(*) FROM "PriceHistory" WHERE date BETWEEN $1 AND $2;', range);
-    const query = new QueryStream(`SELECT price, date FROM "PriceHistory" WHERE date BETWEEN $1 AND $2 ORDER BY date ASC;`, range);
+    const query = new QueryStream('SELECT price, date FROM "PriceHistory" WHERE date BETWEEN $1 AND $2 ORDER BY date ASC;', range);
     const client = await this.pool.connect();
     const resultStream = client.query(query);
 

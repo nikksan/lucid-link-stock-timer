@@ -1,22 +1,22 @@
 import { loadConfig } from '@config/index';
 import parseCliArgs from 'minimist';
 import pgFormat from 'pg-format';
-import { Client } from 'pg'
+import { Client } from 'pg';
 import moment from 'moment';
 
 (async () => {
   const argv = parseCliArgs(process.argv.slice(2));
   if (!argv.from) {
-    throw new TypeError(`Expected --from to be provided`);
+    throw new TypeError('Expected --from to be provided');
   }
 
   const startDate = new Date(argv.from);
   if (startDate.toString() === 'Invalid Date') {
-    throw new TypeError(`Expected --from to be valid date`);
+    throw new TypeError('Expected --from to be valid date');
   }
 
   if (!argv.records) {
-    throw new TypeError(`Expected --records to be provided`);
+    throw new TypeError('Expected --records to be provided');
   }
 
   const batchSize = 1000;
