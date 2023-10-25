@@ -7,6 +7,7 @@ import HttpController from "@infrastructure/http/HttpController";
 import HttpServer from "@infrastructure/http/HttpServer";
 import HttpRouterFactory from "@infrastructure/http/HttpRouterFactory";
 import cluster from 'node:cluster';
+import PostgresSolutionCacher from "@infrastructure/database/PostgresSolutionCacher";
 
 const config = loadConfig();
 
@@ -35,10 +36,24 @@ if (!isTesting) {
       })
     }).singleton(),
   });
+
+  container.register({
+    solutionCacher: asClass(PostgresSolutionCacher, {
+      injector: () => ({
+        config: config.db,
+      })
+    }).singleton(),
+  });
 } else {
   const { default: StubbedPriceHistoryReadModel } = require('../tests/util/StubbedPriceHistoryReadModel');
   container.register({
     priceHistoryReadModel: asClass(StubbedPriceHistoryReadModel).singleton(),
+  });
+
+  const { default: FakeSolutionCacher } = require('../tests/util/FakeSolutionCacher');
+
+  container.register({
+    solutionCacher: asClass(FakeSolutionCacher).singleton(),
   });
 }
 
@@ -53,6 +68,8 @@ container.register({
 container.register({
   httpRouterFactory: asClass(HttpRouterFactory),
 });
+
+
 
 container.register({
   httpServer: asClass(HttpServer, {

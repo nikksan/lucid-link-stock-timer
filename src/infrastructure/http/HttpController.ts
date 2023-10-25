@@ -1,25 +1,38 @@
 import CalculateEntryAndExitQuery from '@application/CalculateEntryAndExitQuery';
-import { makeDateRange } from '@application/types';
+import { Solution, makeDateRange } from '@application/types';
 import { Request, Response, NextFunction } from 'express';
 import API from './API';
 import APIErrors from './APIErrors';
+import SolutionCacher from '@infrastructure/database/SolutionCacher';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { Logger } from '@infrastructure/logger/Logger';
 
 export default class HttpController {
+  private logger: Logger;
+
   constructor(
     private calculateEntryAndExitQuery: CalculateEntryAndExitQuery,
-  ) {}
+    private solutionCacher: SolutionCacher,
+    loggerFactory: LoggerFactory,
+  ) {
+    this.logger = loggerFactory.create(this.constructor.name);
+  }
 
   calculateEntryAndExit = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const range = makeDateRange([req.query.from, req.query.to]);
-      const solution = await this.calculateEntryAndExitQuery.run(range);
+      const cachedSolution = await this.solutionCacher.getSolution(range);
+      if (cachedSolution) {
+        this.logger.debug(`Using cached solution for range ${range}`);
+        this.sendSolution(res, cachedSolution);
+        return;
+      }
 
-      API.sendData(res, solution ? {
-        entryPrice: solution.entryPrice,
-        entryDate: solution.entryDate,
-        exitPrice: solution.exitPrice,
-        exitDate: solution.exitDate,
-      } : null);
+      const solution = await this.calculateEntryAndExitQuery.run(range);
+      this.logger.debug(`Caching solution for range ${range}`);
+      await this.solutionCacher.storeSolution(range, solution);
+
+      this.sendSolution(res, solution);
     } catch (err) {
       if (err instanceof TypeError) {
         return API.sendError(res, {
@@ -37,5 +50,14 @@ export default class HttpController {
 
       next(err);
     }
+  }
+
+  private sendSolution(res: Response, solution: Solution | null) {
+    API.sendData(res, solution ? {
+      entryPrice: solution.entryPrice,
+      entryDate: solution.entryDate,
+      exitPrice: solution.exitPrice,
+      exitDate: solution.exitDate,
+    } : null);
   }
 }

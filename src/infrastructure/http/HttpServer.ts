@@ -1,15 +1,8 @@
-import express, { NextFunction, Request, Response, Router, static as staticRoute, Application } from 'express';
-// import compression from 'compression';
-// import bodyParser from 'body-parser';
+import express, { NextFunction, Request, Response, Router, Application } from 'express';
 import { Server } from 'http';
-// import { isEmpty } from 'lodash';
-// import API from '@infrastructure/api/API';
-// import APIErrors from '@infrastructure/api/APIErrors';
-// import MainRouterFactory from '@infrastructure/routes/MainRouterFactory';
 import { Logger } from '@infrastructure/logger/Logger';
 import { Config } from '@config/Config';
 import LoggerFactory from '@infrastructure/logger/LoggerFactory';
-import RouterFactory from './HttpRouterFactory';
 import API from './API';
 import APIErrors from './APIErrors';
 import HttpRouterFactory from './HttpRouterFactory';
@@ -21,7 +14,6 @@ export default class HttpServer {
 
   constructor(
     private config: Config['server'],
-    // private rootDir: string,
     httpRouterFactory: HttpRouterFactory,
     loggerFactory: LoggerFactory,
   ) {
@@ -34,12 +26,6 @@ export default class HttpServer {
   }
 
   start(): Promise<void> {
-    // this.app.use(bodyParser.json(this.config.bodyParser.json));
-    // this.app.use(bodyParser.urlencoded(this.config.bodyParser.urlencoded));
-    // this.app.use(compression());
-
-    // this.app.use(this.handleContentType);
-
     // if (this.config.exposeDocs) {
     //   this.app.use('/docs', staticRoute(this.rootDir + '/docs'));
     // }
@@ -47,7 +33,6 @@ export default class HttpServer {
     // if (this.config.enableCORS) {
     //   this.app.use(this.allowCORS);
     // }
-
 
     return new Promise((resolve, reject) => {
       const server: Server = this.app.listen(this.config.port);
@@ -66,23 +51,6 @@ export default class HttpServer {
   getExpressApp(): Application {
     return this.app;
   }
-
-  // private handleContentType = (request: Request, response: Response, next: NextFunction) => {
-  //   if (
-  //     request.method === 'GET' ||
-  //     request.method === 'OPTIONS' ||
-  //     (request.method === 'DELETE' && isEmpty(request.body)) ||
-  //     (request.method === 'POST' && isEmpty(request.body))
-  //   ) {
-  //     return next();
-  //   }
-
-  //   if (!request.is('application/json')) {
-  //     return API.sendError(response, APIErrors.INVALID_CONTENT_TYPE);
-  //   }
-
-  //   next();
-  // };
 
   // private allowCORS = (request: Request, response: Response, next: NextFunction) => {
   //   response.header('Access-Control-Allow-Credentials', 'true');
@@ -113,11 +81,6 @@ export default class HttpServer {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private handleError = (error: Error, _request: Request, response: Response, _next: NextFunction) => {
-    // // BodyParser error
-    // if (error instanceof SyntaxError) {
-    //   return API.sendError(response, APIErrors.MALFORMED_REQUEST_BODY);
-    // }
-
     this.logger.error(error);
 
     API.sendError(response, APIErrors.GENERAL_ERROR);
