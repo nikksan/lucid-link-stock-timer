@@ -1,4 +1,4 @@
-import { DateRange, Solution } from '@application/types';
+import { DateRange, Solution } from '@domain/types';
 
 interface SolutionCacher {
   getSolution(dateRange: DateRange): Promise<Solution | null | undefined>;

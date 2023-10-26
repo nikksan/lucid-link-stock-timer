@@ -1,4 +1,4 @@
-import { DateRange, PriceHistory } from '../../application/types';
+import { DateRange, PriceHistory } from '../types';
 
 interface PriceHistoryReadModel {
   getRange(): Promise<DateRange | null>;

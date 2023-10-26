@@ -2,7 +2,7 @@ import HttpServer from '@infrastructure/http/HttpServer';
 import container from '../../src/root';
 import ApiClient from './util/ApiClient';
 import StubbedPriceHistoryReadModel from 'tests/util/StubbedPriceHistoryReadModel';
-import { makeDateRange } from '@application/types';
+import { makeDateRange } from '@domain/types';
 import arrayToAsyncIterable from '../util/arrayToAsyncIterable';
 
 describe('calculate entry and exit', () => {

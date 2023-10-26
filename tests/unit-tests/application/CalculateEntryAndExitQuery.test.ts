@@ -1,6 +1,6 @@
 import CalculateEntryAndExitQuery from '@application/CalculateEntryAndExitQuery';
 import NoDataError from '@application/errors/NoDataError';
-import { makeDateRange } from '@application/types';
+import { makeDateRange } from '@domain/types';
 import { loadConfig } from '@config/index';
 import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 import arrayToAsyncIterable from '../../util/arrayToAsyncIterable';

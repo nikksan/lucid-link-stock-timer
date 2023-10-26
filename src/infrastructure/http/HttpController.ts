@@ -1,5 +1,5 @@
 import CalculateEntryAndExitQuery from '@application/CalculateEntryAndExitQuery';
-import { Solution, makeDateRange } from '@application/types';
+import { Solution, makeDateRange } from '@domain/types';
 import { Request, Response, NextFunction } from 'express';
 import API from './API';
 import APIErrors from './APIErrors';

@@ -1,4 +1,4 @@
-import { DateRange, Solution } from '@application/types';
+import { DateRange, Solution } from '@domain/types';
 import SolutionCacher from '@infrastructure/database/SolutionCacher';
 
 export default class FakeSolutionCacher implements SolutionCacher {

@@ -1,4 +1,4 @@
-import { PriceHistory, Solution } from '@application/types';
+import { PriceHistory, Solution } from '@domain/types';
 import { Logger } from '@infrastructure/logger/Logger';
 import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 

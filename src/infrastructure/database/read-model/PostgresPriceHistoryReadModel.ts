@@ -3,7 +3,7 @@ import { Config } from '@config/Config';
 import { Pool, types } from 'pg';
 import QueryStream from 'pg-query-stream';
 import { Transform, TransformCallback, pipeline } from 'stream';
-import { DateRange, PriceHistory, PricePoint } from '@application/types';
+import { DateRange, PriceHistory, PricePoint } from '@domain/types';
 
 // disable parsing of timestamp
 types.setTypeParser(types.builtins.TIMESTAMP, (timeStr) => timeStr);

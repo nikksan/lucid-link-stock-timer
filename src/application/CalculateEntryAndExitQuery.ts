@@ -2,7 +2,7 @@ import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 import NoDataError from './errors/NoDataError';
 import EntryAndExitCalculator from '@domain/service/EntryAndExitCalculator';
 import PriceHistoryReadModel from '@domain/read-model/PriceHistoryReadModel';
-import { DateRange, Solution, isDateRangeWithinAnotherOne } from './types';
+import { DateRange, Solution, isDateRangeWithinAnotherOne } from '../domain/types';
 import { format } from 'util';
 
 export default class CalculateEntryAndExitQuery {

@@ -1,4 +1,4 @@
-import { DateRange, Solution } from '@application/types';
+import { DateRange, Solution } from '@domain/types';
 import { Config } from '@config/Config';
 import { Pool } from 'pg';
 import SolutionCacher from './SolutionCacher';

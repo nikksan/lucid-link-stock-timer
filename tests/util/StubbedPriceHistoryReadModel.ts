@@ -1,5 +1,5 @@
 import PriceHistoryReadModel from '@domain/read-model/PriceHistoryReadModel';
-import { DateRange, PriceHistory } from '@application/types';
+import { DateRange, PriceHistory } from '@domain/types';
 
 export default class StubbedPriceHistoryReadModel implements PriceHistoryReadModel {
   private priceHistory: PriceHistory | undefined;
