@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    ports:
+      - '5432:${DB_PORT}'
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - data:/var/lib/postgresql/data
+  app:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+
+volumes:
+  data:
+

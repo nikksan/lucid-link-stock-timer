@@ -25,7 +25,7 @@ Current working environment could be changed by setting `NODE_ENV` environment v
 
 ## Usage
 
-* `npm start` - starts the service
+* `npm start` - starts the service (also runs migrations)
 * `npm run test` - runs the tests
 * `npm run migrate:up` - runs migrations
 * `npm run seed <from> <records>` - runs the seeder, expects two arguments - start date and number of records to insert
@@ -42,6 +42,10 @@ $ cp .env.sample .env
 $ npm run seed "2023-01-01 00:00:00" 2000000
 $ npm start
 ```
+
+## Docker
+
+Using docker the only additional step would be to enter the container and execute the seeder from there.
 
 ## Configuration
 
