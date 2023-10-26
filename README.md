@@ -4,7 +4,7 @@
 
 Minimalistic service providing best entry and exit based on a stock price history.
 
-## Requirements
+## Requirements (skip if using Docker)
 
 * NodeJS v16.10.0 or newer
 * [PostgreSQL Server 15.4 or newer](https://www.postgresql.org/docs/current/tutorial-install.html).
