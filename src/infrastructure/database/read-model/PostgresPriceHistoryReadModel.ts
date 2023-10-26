@@ -1,4 +1,4 @@
-import PriceHistoryReadModel from '@application/service/PriceHistoryReadModel';
+import PriceHistoryReadModel from '@domain/read-model/PriceHistoryReadModel';
 import { Config } from '@config/Config';
 import { Pool, types } from 'pg';
 import QueryStream from 'pg-query-stream';

@@ -1,7 +1,7 @@
 import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 import NoDataError from './errors/NoDataError';
-import EntryAndExitCalculator from './service/EntryAndExitCalculator';
-import PriceHistoryReadModel from './service/PriceHistoryReadModel';
+import EntryAndExitCalculator from '@domain/service/EntryAndExitCalculator';
+import PriceHistoryReadModel from '@domain/read-model/PriceHistoryReadModel';
 import { DateRange, Solution, isDateRangeWithinAnotherOne } from './types';
 import { format } from 'util';
 
