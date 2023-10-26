@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "start": "npm run migrate:up && ts-node -r tsconfig-paths/register src/index.ts",
     "test": "jest",
     "watch": "jest --watch --bail --coverage=false",
     "migrate:up": "npm run migrate up",

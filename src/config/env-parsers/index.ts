@@ -21,7 +21,7 @@ export const parseNumber = (field: string, defaultValue?: number): number => {
     throw new TypeError(`Passing ${field} from env is required!`);
   }
 
-  const valueAsNumber = parseNumber(value);
+  const valueAsNumber = Number(value);
   if (isNaN(valueAsNumber)) {
     throw new TypeError(`Failed to parse ${field} with value ${value} as number!`);
   }

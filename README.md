@@ -39,7 +39,6 @@ $ npm run seed "2020-01-01 00:00:00" 1000000
 ```
 $ npm install
 $ cp .env.sample .env
-$ npm run migrate:up
 $ npm run seed "2023-01-01 00:00:00" 2000000
 $ npm start
 ```
